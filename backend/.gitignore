@@ -1,0 +1,6 @@
+# Ignore Python virtual environments, database credentials, and temp files
+venv/
+.env
+__pycache__/
+*.pyc
+*.pyo
