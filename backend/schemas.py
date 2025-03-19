@@ -20,7 +20,7 @@ class ReviewSchema(BaseModel):
 
 class ProductResponse(BaseModel):
     id: int
-    name: str
+    product_name: str
     description: Optional[str]
     reviews: List[ReviewSchema] = []
 
