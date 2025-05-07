@@ -22,6 +22,8 @@ def get_db():
 def read_root():
     return {"message": "FastAPI is working!"}
 
+Base.metadata.create_all(bind=engine)
+
 @app.post("/reviews/", response_model=ReviewCreate)
 def submit_review(review: ReviewCreate, db: Session = Depends(get_db)):
     db_review = Review(
