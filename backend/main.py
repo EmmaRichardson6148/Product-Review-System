@@ -1,8 +1,9 @@
 from fastapi import FastAPI, HTTPException, Depends
 from sqlalchemy.orm import Session
-from backend.database import SessionLocal, engine, Base
-from backend.models import Product, Review, ReviewCategory, ReviewCategoryMap
-from backend.schemas import ReviewCreate, ProductResponse
+from database import SessionLocal, engine, Base
+from models import Product, Review, ReviewCategory, ReviewCategoryMap
+from schemas import ReviewCreate, ProductResponse
+
 from typing import List
 
 
