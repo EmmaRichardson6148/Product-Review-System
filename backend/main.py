@@ -35,7 +35,7 @@ def submit_review(review: ReviewCreate, db: Session = Depends(get_db)):
     db.refresh(db_review)
 
     for category_id in review.category_ids:
-        db.add(ReviewCategoryMapping(review_id=db_review.id, category_id=category_id))
+        db.add(ReviewCategoryMap(review_id=db_review.id, category_id=category_id))
     db.commit()
 
     return db_review
