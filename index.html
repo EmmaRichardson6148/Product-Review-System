@@ -44,10 +44,35 @@
       });
     }
 
-    document.addEventListener("DOMContentLoaded", async () => {
-      await fetchAndFillDropdown("products", "product");
-      await fetchAndFillDropdown("categories", "category");
-    });
+document.addEventListener("DOMContentLoaded", () => {
+  const mockProducts = [
+    { id: 1, product_name: "Pink Shirt" },
+    { id: 2, product_name: "Blue Pants" },
+  ];
+  const mockCategories = [
+    { id: 1, category_name: "Bargain" },
+    { id: 2, category_name: "Accurate Sizing" },
+    { id: 2, category_name: "Fashionable" },
+    { id: 2, category_name: "Good Quality" }
+  ];
+
+  const productSelect = document.getElementById("product");
+  mockProducts.forEach(item => {
+    const option = document.createElement("option");
+    option.value = item.id;
+    option.textContent = item.product_name;
+    productSelect.appendChild(option);
+  });
+
+  const categorySelect = document.getElementById("category");
+  mockCategories.forEach(item => {
+    const option = document.createElement("option");
+    option.value = item.id;
+    option.textContent = item.category_name;
+    categorySelect.appendChild(option);
+  });
+});
+
 
     document.getElementById("review-form").addEventListener("submit", async function (e) {
       e.preventDefault();
