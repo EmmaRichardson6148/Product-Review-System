@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Clothing Reviews</title>
+</head>
+<body>
+  <h1>Submit a Product Review</h1>
+
+  <form id="review-form">
+    <label for="product">Product:</label>
+    <select id="product" name="product_id"></select><br><br>
+
+    <label for="user_name">Your Name:</label>
+    <input type="text" id="user_name" name="user_name" required><br><br>
+
+    <label for="rating">Rating (1-5):</label>
+    <input type="number" id="rating" name="rating" min="1" max="5" required><br><br>
+
+    <label for="review_text">Review:</label>
+    <textarea id="review_text" name="review_text" required></textarea><br><br>
+
+    <label for="category">Category:</label>
+    <select id="category" name="category_ids"></select><br><br>
+
+    <button type="submit">Submit Review</button>
+  </form>
+
+  <p id="result"></p>
+
+  <script>
+    const baseUrl = 'http://127.0.0.1:8000';
+
+    async function fetchAndFillDropdown(endpoint, elementId, labelKey = "name") {
+      const response = await fetch(`${baseUrl}/${endpoint}`);
+      const data = await response.json();
+      const select = document.getElementById(elementId);
+      data.forEach(item => {
+        const option = document.createElement('option');
+        option.value = item.id;
+        option.textContent = item.product_name || item.name || item.category_name;
+        select.appendChild(option);
+      });
+    }
+
+    document.addEventListener("DOMContentLoaded", async () => {
+      await fetchAndFillDropdown("products", "product");
+      await fetchAndFillDropdown("categories", "category");
+    });
+
+    document.getElementById("review-form").addEventListener("submit", async function (e) {
+      e.preventDefault();
+
+      const form = e.target;
+      const data = {
+        product_id: parseInt(form.product.value),
+        user_name: form.user_name.value,
+        rating: parseInt(form.rating.value),
+        review_text: form.review_text.value,
+        category_ids: [parseInt(form.category.value)]
+      };
+
+      const response = await fetch(`${baseUrl}/reviews/`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify(data)
+      });
+
+      const result = document.getElementById("result");
+      if (response.ok) {
+        result.textContent = "Review submitted successfully.";
+        form.reset();
+      } else {
+        const err = await response.text();
+        result.textContent = `Error: ${err}`;
+      }
+    });
+  </script>
+</body>
+</html>
+
