@@ -1,6 +1,6 @@
 from sqlalchemy import Column, Integer, String, ForeignKey
 from sqlalchemy.orm import relationship
-from backend.database import Base
+from database import Base
 
 class Product(Base):
     __tablename__ = "products"
@@ -38,3 +38,10 @@ class ReviewCategoryMap(Base):
 
     review = relationship("Review", back_populates="categories")
     category = relationship("ReviewCategory", back_populates="category_mappings")
+
+class User(Base):
+    __tablename__ = "users"
+
+    id = Column(Integer, primary_key=True, index=True)
+    name = Column(String(100), nullable=False)
+    reviews = relationship("Review", backref="user")
