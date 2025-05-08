@@ -15,7 +15,7 @@ class Review(Base):
 
     id = Column(Integer, primary_key=True, index=True)
     product_id = Column(Integer, ForeignKey("products.id"), nullable=False)
-    user_id = Column(Integer, ForeignKey("users.id"), nullable=True)
+   #  user_id = Column(Integer, ForeignKey("users.id"), nullable=True)
     rating = Column(Integer, nullable=False)
     review_text = Column(String, nullable=True)
     
